@@ -71,11 +71,11 @@ def index():
 
                 xml_file_directory = os.path.join("static", xml_file.filename)
                 xml_file.save(xml_file_directory)
-                try:
-                    create_collection(xml_file_directory)
-                    message = "Collection updated with success!"
-                except:
-                    message = "Error! Please check the server logs!"
+
+                create_collection(xml_file_directory)
+                message = "Collection updated with success!"
+            # except :
+            #     message = "Error! Please check the server logs!"
 
         elif "edit_local_info" in request.form:
             if os.path.exists(localCSV):
