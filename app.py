@@ -224,4 +224,4 @@ def delete():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=97, host="0.0.0.0")
+    app.run(debug=True, port=8787, host="0.0.0.0")
