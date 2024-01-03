@@ -3,7 +3,7 @@ import os
 import csv
 import json
 import pandas as pd
-
+import traceback
 from myGameLog.myGameLog import (
     create_game_folders,
     create_hardware_folders,
@@ -71,11 +71,12 @@ def index():
 
                 xml_file_directory = os.path.join("static", xml_file.filename)
                 xml_file.save(xml_file_directory)
-
-                create_collection(xml_file_directory)
-                message = "Collection updated with success!"
-            # except :
-            #     message = "Error! Please check the server logs!"
+                try:
+                    create_collection(xml_file_directory)
+                    message = "Collection updated with success!"
+                except:
+                    message = "Error! Please check the server logs!"
+                    traceback.print_exc()
 
         elif "edit_local_info" in request.form:
             if os.path.exists(localCSV):
@@ -91,6 +92,7 @@ def index():
                     generate_qr_code(serverURL)
                 except:
                     message = "Error! Please check the server logs!"
+                    traceback.print_exc()
                 return render_template(
                     "index.html", qr_code_link=zip_file_directory + ".zip"
                 )
