@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Current Entry</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.17.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #343a40;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+
+        .submit-btn {
+            width: 100%;
+        }
+
+        .disable-edit {
+            pointer-events: none;
+            background-color: #e9ecef;
+        }
+
+        .disable-edit input {
+            background-color: #e9ecef;
+        }
+
+        .mb-3:not(.disable-edit) {
+            margin-bottom: 1rem;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5 text-center">
+        <div class="form-container">
+            <h3>Edit Current Entry</h3>
+            <form class="mt-4" method="POST">
+                <div class="mb-3 image-container">
+                    <img src="{{ fields['imageUrl'] }}" alt="Item Image">
+                </div>
+                <div class="mb-3 ">
+                    <strong>({{fields['platform']}}) </br>{{fields['name']}}</strong>
+                </div>
+                <div class="mb-3 disable-edit">
+                    <strong>Hash</strong>
+                    <input name="hash" type="text" class="form-control" value="{{ fields['hash'] }}" readonly>
+                </div>
+
+                <div class="mb-3 ">
+                        <strong>Power</strong>
+                        <input name="power" type="text" class="form-control" value="{{fields['power']}}">
+                </div>
+                <div class="mb-3 ">
+                        <strong>Video</strong>
+                        <input name="video" type="text" class="form-control" value="{{fields['video']}}">
+                </div>
+                <div class="mb-3 ">
+                        <strong>Mods</strong>
+                        <input name="mods" type="text" class="form-control" value="{{fields['mods']}}">
+                </div>
+
+                <div class="mb-3 ">
+                        <strong>Location</strong>
+                        <input name="location" type="text" class="form-control" value="{{fields['location']}}">
+                </div>
+
+    
+                <!-- Submit form button with Bootstrap styling -->
+                <button type="submit" class="btn btn-success mt-4 submit-btn">
+                    <i class="bi bi-check-circle"></i> Submit
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

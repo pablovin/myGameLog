@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game Collection</title>
+    <style>
+                body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        section {
+            padding: 1em;
+        }
+
+        .game-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-image {
+            width: 100px;
+            margin-right: 20px;
+            border-radius: 8px;
+        }
+
+        .game-details {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .platform-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-image {
+            width: 100px;
+            border-radius: 8px;
+            position: absolute; /* Absolute positioning */
+            top: 15%; /* Position from the top */
+            left: 40%; /* Position from the left */
+            height:auto;
+        }
+
+        .platform-details {
+            flex: 1;
+            font-size: 14px;
+            padding-left: 5px; /* Adjust this value to create space for the image */
+            padding-right: 5px; /* Adjust this value to create space for the image */
+            padding-top: 40%; /* Adjust this value to create space for the image */
+        }
+    </style>
+</head>
+<body>
+
+  <section>
+    
+    <header>
+        <h1>My Game Log v0.1</h1>
+    </header>
+
+    <div id="platList"></div>
+
+    <header> 
+      <h1>Hardware List</h1>
+    </header>
+
+    <div id="hardList">
+      <!-- Hardware entries will be dynamically added here -->
+    </div>
+
+
+    <header> 
+      <h1>Game List</h1>
+    </header>
+
+    <div id="gameList">
+      <!-- Game entries will be dynamically added here -->
+    </div>
+    <script>
+      // Function to fetch and parse CSV data
+      async function fetchCSV(url) {
+          try {
+              const response = await fetch(url);
+
+              // Check if the response status is OK (200)
+              if (!response.ok) {
+                  throw new Error(`Failed to fetch CSV. Status: ${response.status}`);
+              }
+
+              const data = await response.text();
+              const parsedData = Papa.parse(data, { header: true }).data;
+
+              return parsedData;
+          } catch (error) {
+              console.error('Error fetching or parsing CSV:', error.message);
+              return false;
+          }
+      }
+
+      // Function to create a game entry and append it to the gameList div
+      function createGameEntry(game) {
+          const gameContainer = document.createElement('div');
+          gameContainer.className = 'game-container';
+
+          const gameImage = document.createElement('img');
+          gameImage.src = game.imageUrl;
+          gameImage.alt = `${game.name} Cover`;
+          gameImage.className = 'game-image';
+
+          const gameDetails = document.createElement('div');
+          gameDetails.className = 'game-details';
+          gameDetails.innerHTML = `
+              <h2>${game.name}</h2>              
+              <p><b>Region:</b> ${game.region}</p>
+              <p><b>Genre:</b> ${game.genre}</p>
+              <p><b>Release Date:</b> ${game.releaseDate}</p>
+              <p><b>Buying Date:</b> ${game.buyingDate}</p>
+              <p><b>CIB:</b> ${game.cib}</p>
+              <p><b>Completed:</b> ${game.completed}</p>
+          `;
+
+          gameContainer.appendChild(gameImage);
+          gameContainer.appendChild(gameDetails);
+
+          document.getElementById('gameList').appendChild(gameContainer);
+      }
+
+      // Function to create a Hardware entry and append it to the gameList div
+      function createHardwareEntry(hard) {
+          const gameContainer = document.createElement('div');
+          gameContainer.className = 'game-container';
+
+          const hardImage = document.createElement('img');
+          hardImage.src = hard.imageUrl;
+          hardImage.alt = `${hard.name} Cover`;
+          hardImage.className = 'game-image';
+
+          const hardDetails = document.createElement('div');
+          hardDetails.className = 'game-details';
+          hardDetails.innerHTML = `
+              <h2>${hard.name}</h2>              
+              <p><b>Region:</b> ${hard.region}</p>            
+              <p><b>Release Date:</b> ${hard.releaseDate}</p>
+              <p><b>Buying Date:</b> ${hard.buyingDate}</p>
+              <p><b>CIB:</b> ${hard.cib}</p>
+              <p><b>Power:</b> ${hard.power}</p>
+              <p><b>Video:</b> ${hard.video}</p>
+              <p><b>Mods:</b> ${hard.mods}</p>
+              <p><b>Location:</b> ${hard.location}</p>
+          `;
+
+          gameContainer.appendChild(hardImage);
+          gameContainer.appendChild(hardDetails);
+
+          document.getElementById('hardList').appendChild(gameContainer);
+      }
+
+      // Function to create a Platform entry and append it to the platform div
+      function createPlatformEntry(plat) {
+
+        const gameContainer = document.createElement('div');
+        gameContainer.className = 'platform-container';
+         
+        const hardImage = document.createElement('img');
+          hardImage.src = plat.logo;
+          hardImage.alt = `${plat.name} Cover`;
+          hardImage.className = 'platform-image';
+          
+          const hardDetails = document.createElement('div');
+          hardDetails.className = 'platform-details';
+          hardDetails.innerHTML = `
+              <h2>${plat.name}</h2>
+              <p>${plat.summary}</p>             
+          `;
+
+          gameContainer.appendChild(hardImage);
+          gameContainer.appendChild(hardDetails);
+
+          document.getElementById('platList').appendChild(gameContainer);
+        
+      }
+
+      // Extract CSV file name from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const csvFileName = urlParams.get('platform');
+
+      if (!csvFileName) {
+          console.error('CSV file name not provided in the URL.');
+      } else {
+          // Fetch and parse CSV data, then create entries for each game
+          const csvURLGames = "platforms/"+csvFileName+"/games_list.csv";        
+          const csvURLHardware = "platforms/"+csvFileName+"/hardware_list.csv";        
+          const csvURLPlatform = "platforms/"+csvFileName+"/platform_description.csv";   
+
+          fetchCSV(csvURLGames).then(games => {
+              if (games !== false) {
+                  games.forEach(createGameEntry);
+              } else {
+                  console.log('Failed to fetch or parse games CSV.');
+              }
+          });
+
+          // Fetch and process hardware CSV
+          fetchCSV(csvURLHardware).then(hards => {
+              if (hards !== false) {
+                  hards.forEach(createHardwareEntry);
+              } else {
+                  console.log('Failed to fetch or parse hardware CSV.');
+              }
+          });
+
+          // Fetch and process platform CSV
+          fetchCSV(csvURLPlatform).then(plats => {
+              if (plats !== false) {
+                  plats.forEach(createPlatformEntry);
+              } else {
+                  console.log('Failed to fetch or parse platform CSV.');
+              }
+          });
+
+        
+      }
+  </script>
+
+  <!-- Include the PapaParse library for CSV parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  </section>
+
+</body>
+</html>

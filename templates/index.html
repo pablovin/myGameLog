@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game Log - Control Panel</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        h1 {
+            color: #008080;
+            text-align: center;
+        }
+
+        section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input[type="file"] {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            background-color: #008080;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005656;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .message {
+            color: #009900;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #008080;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Game Log - Control Panel</h1>
+    {% if message %}
+       <p class="message">{{ message }}</p>
+    {% endif %}
+    <section>
+        <h2>Local Collection</h2>
+        <form method="post" enctype="multipart/form-data">
+            <label for="xml_file">Upload .xml file:</label>
+            <input type="file" name="xml_file" accept=".xml">
+            <button type="submit" name="update_collection">Update Collection</button>
+        </form>
+        <p>Use this functionality to load an .xml file from CLZ and update the local collection.</p>
+       
+    </section>
+
+    <section>
+        <h2>Local Information</h2>        
+        <form method="post">
+            <p>Use this functionality to update the local information list after uploading the XML file.</p>
+            <button type="submit" name="edit_local_info">Edit Local Information</button>
+        </form>
+
+    </section>
+
+    <section>
+        <h2>QR Coding</h2>
+        <form method="post">
+            <button type="submit" name="generate_qr_code">Generate QR Codes</button>
+        </form>
+        {% if qr_code_link %}
+            <p>Download QR Codes: <a href="{{ qr_code_link }}">{{ qr_code_link }}</a></p>
+        {% endif %}
+    </section>
+</body>
+</html>
