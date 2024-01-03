@@ -147,7 +147,7 @@ def generate_qr_codes(
         if not os.path.exists(save_qr_codes_directory):
             os.makedirs(save_qr_codes_directory)
 
-        qrcode = segno.make_qr(os.path.join(server_url, platform))
+        qrcode = segno.make_qr(server_url + platform)
         qrcode.save(os.path.join(save_qr_codes_directory, f"{platform}.png"), scale=5)
 
         print(f"Saved QR Code for: {platform}.")
