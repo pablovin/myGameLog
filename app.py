@@ -66,6 +66,9 @@ def index():
             xml_file = request.files["xml_file"]
             if xml_file:
                 # Call the function to process the CSV file
+                if not os.path.exists("static"):
+                    os.makedirs("static")
+
                 xml_file_directory = os.path.join("static", xml_file.filename)
                 xml_file.save(xml_file_directory)
                 try:
