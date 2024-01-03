@@ -75,18 +75,24 @@ def index():
                     message = "Error! Please check the server logs!"
 
         elif "edit_local_info" in request.form:
-            return redirect("/edit_local_csv")
+            if os.path.exists(localCSV):
+                return redirect("/edit_local_csv")
+            else:
+                message = "Please import a collection using the XML file first!"
 
         elif "generate_qr_code" in request.form:
             # Call the function to generate QR code
-            try:
-                serverURL = request.base_url
-                generate_qr_code(serverURL)
-            except:
-                message = "Error! Please check the server logs!"
-            return render_template(
-                "index.html", qr_code_link=zip_file_directory + ".zip"
-            )
+            if os.path.exists(localCSV):
+                try:
+                    serverURL = request.base_url
+                    generate_qr_code(serverURL)
+                except:
+                    message = "Error! Please check the server logs!"
+                return render_template(
+                    "index.html", qr_code_link=zip_file_directory + ".zip"
+                )
+            else:
+                message = "Please import a collection using the XML file first!"
 
     return render_template("index.html", message=message)
 
