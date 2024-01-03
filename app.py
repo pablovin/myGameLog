@@ -66,7 +66,7 @@ def index():
             xml_file = request.files["xml_file"]
             if xml_file:
                 # Call the function to process the CSV file
-                xml_file_directory = os.path.join("collection_xml", xml_file.filename)
+                xml_file_directory = os.path.join("static", xml_file.filename)
                 xml_file.save(xml_file_directory)
                 try:
                     create_collection(xml_file_directory)
@@ -224,4 +224,4 @@ def delete():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8787, host="0.0.0.0")
+    app.run(debug=True, port=80, host="0.0.0.0")
