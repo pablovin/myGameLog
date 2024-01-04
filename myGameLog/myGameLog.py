@@ -137,6 +137,21 @@ def create_website_structure(website_directory):
     shutil.copy(os.path.join("myGameLog", "webpages", "index.html"), website_directory)
     shutil.copy(os.path.join("myGameLog", "images", "notFound.jpeg"), website_directory)
 
+    for platform in os.listdir(os.path.join(website_directory, "platforms")):
+        copyFrom = os.path.join("myGameLog", "images", "platforms", f"{platform}.png")
+        copyTo = os.path.join(website_directory, "platforms", platform)
+
+        if os.path.exists(copyFrom):
+            shutil.copy(
+                copyFrom,
+                copyTo,
+            )
+        else:
+            shutil.copy(
+                os.path.join("myGameLog", "images", "notFound.jpeg"),
+                os.path.join(copyTo, f"{platform}.png"),
+            )
+
     print(f"Website created!")
 
 
@@ -193,10 +208,11 @@ def create_platform_descriptions(xml_directory, website_directory):
                 thisDF["name"] = b.platform.text
                 thisDF["summary"] = b.description
 
-                try:
-                    thisDF["logo"] = b.coverfrontdefault.text
-                except:
-                    thisDF["logo"] = "notFound.jpeg"
+                thisPlatformLogo = os.path.join(
+                    "platforms", platform, f"{platform}.png"
+                )
+
+                thisDF["logo"] = thisPlatformLogo
 
                 thisDF = pd.DataFrame(thisDF, index=[platform])
 
