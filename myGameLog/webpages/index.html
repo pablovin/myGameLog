@@ -69,6 +69,7 @@
         }
         
         .platform-container {
+            position: relative;
             display: flex;
             align-items: center;
             margin-bottom: 20px;
@@ -79,21 +80,11 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .platform-image {
-            width: 100px;
-            border-radius: 8px;
-            position: absolute; /* Absolute positioning */
-            top: 15%; /* Position from the top */
-            left: 40%; /* Position from the left */
-            height:auto;
-        }
-
         .platform-details {
             flex: 1;
             font-size: 14px;
-            padding-left: 5px; /* Adjust this value to create space for the image */
-            padding-right: 5px; /* Adjust this value to create space for the image */
-            padding-top: 40%; /* Adjust this value to create space for the image */
+            padding-left: 5px; /* Adjust this value based on the width of the image and space needed */
+            padding-right: 5px;
         }
     </style>
 </head>
@@ -208,19 +199,20 @@
         const gameContainer = document.createElement('div');
         gameContainer.className = 'platform-container';
          
-        const hardImage = document.createElement('img');
-          hardImage.src = plat.logo;
-          hardImage.alt = `${plat.name} Cover`;
-          hardImage.className = 'platform-image';
+        // const hardImage = document.createElement('img');
+        //   hardImage.src = plat.logo;
+        //   hardImage.alt = `${plat.name} Cover`;
+        //   hardImage.className = 'platform-image';
           
           const hardDetails = document.createElement('div');
           hardDetails.className = 'platform-details';
           hardDetails.innerHTML = `
+                <img src="${plat.logo}"> </br>
               <h2>${plat.name}</h2>
               <p>${plat.summary}</p>             
           `;
 
-          gameContainer.appendChild(hardImage);
+        //   gameContainer.appendChild(hardImage);
           gameContainer.appendChild(hardDetails);
 
           document.getElementById('platList').appendChild(gameContainer);
