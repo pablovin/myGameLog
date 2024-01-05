@@ -165,3 +165,4 @@ static/collection
 *.pptx
 *export.xml
 *.csv
+static/qr_codes*

@@ -7,7 +7,8 @@ from glob import glob
 
 import shutil
 
-from myGameLog.utils import remove_last_empty_row
+
+from myGameLog.utils import remove_last_empty_row, merge_logo_with_qr_code
 
 
 def update_platform_hardware(website_directory, local_csv):
@@ -162,8 +163,15 @@ def generate_qr_codes(
         if not os.path.exists(save_qr_codes_directory):
             os.makedirs(save_qr_codes_directory)
 
+        qr_code_directory = os.path.join(save_qr_codes_directory, f"{platform}.png")
+        logo_directory = os.path.join(
+            website_directory, "platforms", platform, f"{platform}.png"
+        )
+
         qrcode = segno.make_qr(server_url + platform)
-        qrcode.save(os.path.join(save_qr_codes_directory, f"{platform}.png"), scale=5)
+        qrcode.save(qr_code_directory, scale=5)
+
+        merge_logo_with_qr_code(qr_code_directory, logo_directory, qr_code_directory)
 
         print(f"Saved QR Code for: {platform}.")
 
