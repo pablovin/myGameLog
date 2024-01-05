@@ -1,4 +1,5 @@
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
+import PIL
 
 
 def remove_last_empty_row(csv_directory):
@@ -16,45 +17,60 @@ def add_white_background(image):
 
 
 def merge_logo_with_qr_code(qr_code_path, logo_path, output_path):
-    # Load images
-    qr_code = Image.open(qr_code_path)
-    logo = Image.open(logo_path)
+    logo = Image.open(logo_path).resize((300, 180))
+    qr_code = Image.open(qr_code_path).resize((205, 205))
+    text_below_qr = "Powered by Retroserver"
 
-    # Ensure the logo has a white background
-    try:
-        logo = add_white_background(logo)
-    except:
-        pass
+    # Now let's use these placeholders to generate the final image
+    # Create a new image with white background
+    final_img = Image.new("RGB", (360, 500), color="white")
 
-    print(f"Whitening the logo!")
-
-    # Create a new image with a white background
-    new_width = 288
-    new_height = logo.height + 10 + qr_code.height
-    new_image = Image.new("RGB", (new_width, new_height), "white")
-
-    # Calculate the position to center the logo
-    logo_position = ((new_width - logo.width) // 2, 0)
-
-    # Paste logo at the centered position
-    new_image.paste(logo, logo_position)
-
-    # Draw a white space below the logo
-    draw = ImageDraw.Draw(new_image)
-    draw.rectangle([(0, logo.height), (new_width, logo.height + 10)], fill="white")
-
-    # Calculate the position to center the QR code
-    qr_code_position = ((new_width - qr_code.width) // 2, logo.height + 10)
-
-    # Paste qr_code at the centered position
-    new_image.paste(qr_code, qr_code_position)
-
-    # Add a black border
-    border_size = 5
-    bordered_image = Image.new(
-        "RGB", (new_width + 2 * border_size, new_height + 2 * border_size), "black"
+    # Calculate the position for the logo and QR code to be centered
+    logo_position = (
+        (final_img.width - logo.width) // 2,
+        (final_img.height - logo.height - qr_code.height) // 3,
     )
-    bordered_image.paste(new_image, (border_size, border_size))
+    qr_code_position = (
+        (final_img.width - qr_code.width) // 2,
+        logo_position[1] + logo.height + 20,
+    )
+
+    # Paste the logo and QR code onto the final image
+    final_img.paste(logo, logo_position)
+    final_img.paste(qr_code, qr_code_position)
+
+    # Create a draw object to add the border and dotted line
+    draw = ImageDraw.Draw(final_img)
+
+    # Define the border width
+    border_width = 10
+
+    # Draw the border
+    for i in range(border_width):
+        draw.rectangle(
+            [(i, i), (final_img.width - i - 1, final_img.height - i - 1)],
+            outline="black",
+        )
+
+    # Draw the dotted line
+    line_start = (border_width, logo_position[1] + logo.height + 10)
+    for x in range(line_start[0], final_img.width - border_width, 10):
+        if (x // 10) % 2 == 0:  # Dots with space of 10 pixels
+            draw.line([(x, line_start[1]), (x + 5, line_start[1])], fill="black")
+
+    # Add the text below the QR code using a simple font (since Verdana is not available)
+    font = ImageFont.load_default(size=22)
+
+    # # Calculate text position (centered below QR code)
+    # text_width = draw.textlength(text_below_qr, font=font)
+
+    text_position = (
+        qr_code_position[0] - 10,
+        qr_code_position[1] + qr_code.height + 10,
+    )
+
+    # Apply the text onto the image
+    draw.text(text_position, text_below_qr, font=font, fill="black")
 
     # Save the final image
-    bordered_image.save(output_path)
+    final_img.save(output_path)
