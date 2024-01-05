@@ -8,10 +8,25 @@ def remove_last_empty_row(csv_directory):
         f.truncate(size - 1)
 
 
+def add_white_background(image):
+    # Create a new image with a white background
+    new_image = Image.new("RGB", image.size, "white")
+    new_image.paste(image, (0, 0), image)
+    return new_image
+
+
 def merge_logo_with_qr_code(qr_code_path, logo_path, output_path):
     # Load images
     qr_code = Image.open(qr_code_path)
     logo = Image.open(logo_path)
+
+    # Ensure the logo has a white background
+    try:
+        logo = add_white_background(logo)
+    except:
+        pass
+
+    print(f"Whitening the logo!")
 
     # Create a new image with a white background
     new_width = 288
