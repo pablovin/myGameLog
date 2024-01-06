@@ -88,7 +88,7 @@ def index():
             # Call the function to generate QR code
             if os.path.exists(localCSV):
                 try:
-                    serverURL = request.base_url[:-1 
+                    serverURL = request.base_url[:-1]
                     generate_qr_code(serverURL)
                 except:
                     message = "Error! Please check the server logs!"
