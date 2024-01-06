@@ -50,7 +50,7 @@ def create_local_update_csv():
 
 
 def generate_qr_code(server_url):
-    server_url = server_url+".local/" + "static/collection/index.html?platform="
+    server_url = server_url + "static/collection/index.html?platform="
 
     generate_qr_codes(
         website_directory, server_url, zip_file_directory, qr_codes_directory
