@@ -4,17 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Game Log - Control Panel</title>
-    <style>
-        body {
+        <style>
+                body {
             font-family: 'Helvetica', 'Arial', sans-serif;
             margin: 20px;
             background-color: #f5f5f5;
             color: #333;
         }
 
-        h1 {
-            color: #008080;
+        header {
+            background-color: #4b296b; /* Dark purple for the header */
+            padding: 20px;
             text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header img {
+            max-height: 100px; /* Adjust as needed */
+        }
+
+        header h1 {
+            color: #ffffff; /* White color for contrast */
+            margin: 0; /* Removes default margin */
+            padding-top: 10px; /* Spacing between the logo and the text */
         }
 
         section {
@@ -23,23 +35,15 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-bottom: 20px;
+            border-left: 5px solid #7e57c2; /* Purple accent on the side */
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-        }
+        /* Other styles remain unchanged */
 
-        input[type="file"] {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 8px;
-            margin-bottom: 12px;
-        }
+        /* Additional color scheme changes */
 
         button {
-            background-color: #008080;
+            background-color: #7e57c2; /* Purple shade for buttons */
             color: #fff;
             padding: 10px 20px;
             border: none;
@@ -49,7 +53,7 @@
         }
 
         button:hover {
-            background-color: #005656;
+            background-color: #5e35b1; /* A darker purple for hover effect */
         }
 
         p {
@@ -57,12 +61,12 @@
         }
 
         .message {
-            color: #009900;
+            color: #009900; /* Consider changing this to a purple shade if it fits your theme */
             margin-top: 10px;
         }
 
         a {
-            color: #008080;
+            color: #7e57c2; /* Matching links to the button color */
         }
 
         a:hover {
@@ -71,7 +75,11 @@
     </style>
 </head>
 <body>
-    <h1>My Game Log - Control Panel</h1>
+    <header>
+    <img src="static/images/myGameLogs_logo.png"  alt="My Game Log Logo">
+    <h1>Control Panel</h1>
+    </header>
+
     {% if message %}
        <p class="message">{{ message }}</p>
     {% endif %}

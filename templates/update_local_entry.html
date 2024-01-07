@@ -15,6 +15,23 @@
             font-family: 'Arial', sans-serif;
         }
 
+        header {
+            background-color: #4b296b; /* Dark purple for the header */
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header img {
+            max-height: 100px; /* Adjust as needed */
+        }
+
+        header h3 {
+            color: #ffffff; /* White color for contrast */
+            margin: 0; /* Removes default margin */
+            padding-top: 10px; /* Spacing between the logo and the text */
+        }
+
         .container {
             margin-top: 50px;
         }
@@ -28,21 +45,15 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h3 {
-            color: #343a40;
-        }
-
-        .form-control {
-            width: 100%;
-        }
-
         .submit-btn {
+            background-color: #7e57c2; /* Purple shade for the button */
+            border-color: #7e57c2; /* Purple border for the button */
             width: 100%;
         }
 
-        .disable-edit {
-            pointer-events: none;
-            background-color: #e9ecef;
+        .submit-btn:hover {
+            background-color: #5e35b1; /* Darker purple for hover */
+            border-color: #5e35b1; /* Darker purple border for hover */
         }
 
         .disable-edit input {
@@ -64,7 +75,9 @@
 <body>
     <div class="container mt-5 text-center">
         <div class="form-container">
-            <h3>Edit Current Entry</h3>
+             <header>
+                <h3>Edit Current Entry</h3>
+            </header>
             <form class="mt-4" method="POST">
                 <div class="mb-3 image-container">
                     <img src="{{ fields['imageUrl'] }}" alt="Item Image">
